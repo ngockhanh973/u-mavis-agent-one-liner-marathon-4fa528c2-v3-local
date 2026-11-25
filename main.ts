@@ -11,6 +11,18 @@ function charCount(text: string): number {
   return [...text].length;
 }
 
+function wordCount(text: string): number {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
+// The joke works in two beats: the agent survives its own review
+// (setup, "aced"), then turns the same review on its owner
+// (punchline, "fired me"). One irreversible action, narrator
+// is the victim, and the process is applied to the wrong target.
+function describeJoke(text: string): string {
+  return `one-liner: ${charCount(text)} chars, ${wordCount(text)} words`;
+}
+
 function isValidJoke(text: string): boolean {
   const n = charCount(text);
   const singleLine = text.trim().split("\n").length === 1;
@@ -24,7 +36,7 @@ function main(): void {
   const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "out";
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "entry.txt"), line + "\n", "utf8");
-  console.log(`entry written (${charCount(line)} chars)`);
+  console.log(`entry written (${describeJoke(line)})`);
 }
 
 main();
